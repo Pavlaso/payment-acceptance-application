@@ -36,23 +36,23 @@ body {
 
 .active-btn{
   position: relative;
-}
-.active-btn:hover {
-  background: red !important;
-  transition-delay: 3.5s;
-}
-.active-btn:hover::before {
-  animation: btn 4s;
-}
-.active-btn::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0%;
-  background-color: red;
-  border-radius: 4px;
+  &:hover {
+    background: red !important;
+    transition-delay: 3.5s;
+    &::before {
+      animation: btn 4s;
+    }
+  }
+  &::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: red;
+    border-radius: 4px;
+  }
 }
 
 .button-text {
