@@ -25,6 +25,7 @@
     "sass": "^1.53.0"
   },
   "devDependencies": {
+    "@types/dateformat": "^5.0.0",
     "@types/material-ui": "^0.21.12",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",

@@ -1,24 +1,23 @@
 import { TextField, Button, Box, Grid } from "@material-ui/core"
 import { MobileDatePicker } from "@mui/lab"
-import { useReducer } from "react"
+import { ChangeEvent, useReducer } from "react"
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import dateFormat from 'dateformat'
 import axios from "axios";
 
-
-const initialState = {
+const initialState: StateType = {
   CardNumber: "",
   ExpDate: null,
   Cvv: "",
   Amount: "",
 }
 
-const reducer = (state, action) => {
+const reducer = (state: StateType, action: ActionType) => {
   if (action.type === "reset") {
     return initialState
   }
-  const result = { ...state }
+  const result: any = { ...state }
   result[action.type] = action.value
   return result
 }
@@ -41,7 +40,7 @@ const Home = () => {
               label="Card Number"
               variant="outlined"
               value={state.CardNumber}
-              onInput={(e) => {
+              onInput={(e: ChangeEvent<HTMLInputElement>) => {
                 let value = e.target.value
                 if (value.length <= 16)
                   dispatch({
@@ -61,9 +60,7 @@ const Home = () => {
               onChange={(newValue) => {
                 dispatch({ type: "ExpDate", value: newValue })
               }}
-              renderInput={(params) => (
-                <TextField fullWidth {...params} helperText={null} />
-              )}
+              renderInput={(params: any)  => <TextField fullWidth {...params} helperText={null} /> }
             />
           </Box>
           <Box className="mb-4">
@@ -72,14 +69,13 @@ const Home = () => {
               direction="row"
               justifyContent="space-between"
               alignItems="flex-start"
-              mb={100}
             >
               <TextField
                 type="number"
                 label="Amount"
                 variant="outlined"
                 value={state.Amount}
-                onInput={(e) => {
+                onInput={(e: ChangeEvent<HTMLInputElement>) => {
                   let value = e.target.value
                   dispatch({ type: "Amount", value: +value < 0 ? "0" : value })
                 }}
@@ -89,7 +85,7 @@ const Home = () => {
                 label="CVV"
                 variant="outlined"
                 value={state.Cvv}
-                onInput={(e) => {
+                onInput={(e: ChangeEvent<HTMLInputElement>) => {
                   let value = e.target.value
                   if (value.length <= 3)
                     dispatch({ type: "Cvv", value: +value < 0 ? "0" : value })
@@ -99,7 +95,7 @@ const Home = () => {
           </Box>
           <Box className="mb-4">
             <Button
-              className={!isDisabled && "active-btn"}
+              className={`${!isDisabled && "active-btn"}`}
               fullWidth
               style={{ fontSize: "20px" }}
               disabled={isDisabled}
@@ -117,7 +113,7 @@ const Home = () => {
   )
 }
 
-function useValidation(state) {
+function useValidation(state: StateType) {
   const { CardNumber, ExpDate, Cvv, Amount } = state
   return {
     CardNumber: CardNumber.match(/^[0-9]{16,16}$/) ? true : false,
@@ -127,7 +123,7 @@ function useValidation(state) {
   }
 }
 
-function useAPI(state, dispatch) {
+function useAPI(state: StateType, dispatch: (action: ActionType) => void) {
   const { CardNumber, ExpDate, Cvv, Amount } = state
   const newPayment = {
     CardNumber,
@@ -135,6 +131,7 @@ function useAPI(state, dispatch) {
     Cvv,
     Amount: +Amount,
   }
+  console.log(JSON.stringify(ExpDate))
   return () => {
     axios.post("http://localhost:3001/api", newPayment).then(res => {
       dispatch({ type: "reset" })
@@ -149,3 +146,15 @@ function useAPI(state, dispatch) {
 }
 
 export default Home
+
+type StateType = {
+  CardNumber: string
+  ExpDate: null | any
+  Cvv: string
+  Amount: string
+}
+
+type ActionType = {
+  type: string
+  value?: string 
+}
