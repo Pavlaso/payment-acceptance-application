@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",

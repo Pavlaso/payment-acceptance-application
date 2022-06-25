@@ -1,12 +1,13 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require("cors")
 
 const PORT = process.env.PORT || 3001
-const DB_URL = `mongodb+srv://user:user@cluster0.kvsae.mongodb.net/?retryWrites=true&w=majority`
+const DB_URL = `mongodb+srv://name123:name123@cluster0.wqblumw.mongodb.net/?retryWrites=true&w=majority`
 
 const app = express()
 const jsonParser = express.json()
-
+app.use(cors())
 
 async function startApp() {
   try {
@@ -22,9 +23,9 @@ startApp()
 
 const userSchema = mongoose.Schema({
       CardNumber: Number,
-      ExpDate: Number,
-      Cvv: Number,
-      Amount: Number
+      ExpDate: String,
+      Cvv: String,
+      Amount: String
 })
 
 const User = mongoose.model('User', userSchema)
@@ -43,7 +44,7 @@ app.post("/api", jsonParser, function (req, res) {
     if (err) {
       console.log('err', err)
     }
-    res.send({ RequestId: result.insertedId, Amount: user.Amount })
+    res.send({ RequestId: result._id, Amount: user.Amount })
   })
 })
   

@@ -4,6 +4,7 @@ import { useReducer } from "react"
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import dateFormat from 'dateformat'
+import axios from "axios";
 
 
 const initialState = {
@@ -136,7 +137,7 @@ function useAPI(state, dispatch) {
   }
   console.log(newPayment)
   return () => {
-    axios.post("/api", newPayment).then(res => {
+    axios.post("http://localhost:3001/api", newPayment).then(res => {
       dispatch({ type: "reset" })
       alert(JSON.stringify(res.data))
     })
