@@ -1,9 +1,10 @@
 import { TextField, Button, Box, Grid } from "@material-ui/core"
-import { DatePicker} from "@mui/lab"
+import { MobileDatePicker } from "@mui/lab"
 import { useReducer } from "react"
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import dateFormat from 'dateformat'
+
 
 const initialState = {
   CardNumber: "",
@@ -11,7 +12,6 @@ const initialState = {
   Cvv: "",
   Amount: "",
 }
-
 
 const reducer = (state, action) => {
   if (action.type === "reset") {
@@ -51,11 +51,12 @@ const Home = () => {
             />
           </Box>
           <Box className="mb-4">
-            <DatePicker
+            <MobileDatePicker
               views={["month", "year"]}
               inputFormat="MM/yyyy"
               label="Expiration Date"
               value={state.ExpDate}
+              disableMaskedInput={true}
               onChange={(newValue) => {
                 dispatch({ type: "ExpDate", value: newValue })
               }}
@@ -133,6 +134,7 @@ function useAPI(state, dispatch) {
     Cvv,
     Amount: +Amount,
   }
+  console.log(newPayment)
   return () => {
     axios.post("/api", newPayment).then(res => {
       dispatch({ type: "reset" })
