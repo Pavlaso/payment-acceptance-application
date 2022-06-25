@@ -135,11 +135,15 @@ function useAPI(state, dispatch) {
     Cvv,
     Amount: +Amount,
   }
-  console.log(newPayment)
   return () => {
     axios.post("http://localhost:3001/api", newPayment).then(res => {
       dispatch({ type: "reset" })
-      alert(JSON.stringify(res.data))
+
+      const id = res.data.RequestId
+      const amount = res.data.Amount
+      const str = `id: ${id} \namount: ${amount}`
+      
+      alert(str)
     })
   }
 }

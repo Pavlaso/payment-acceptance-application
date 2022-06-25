@@ -38,9 +38,9 @@ body {
   position: relative;
   &:hover {
     background: red !important;
-    transition-delay: 3.5s;
+    transition-delay: 1.7s;
     &::before {
-      animation: btn 4s;
+      animation: btn 2s;
     }
   }
   &::before{
